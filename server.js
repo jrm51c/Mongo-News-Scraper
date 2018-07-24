@@ -19,14 +19,13 @@ app.use(express.static("public"));
 
 //db configuration
 
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-// var db = mongoose.connection;
-
-if (process.env.MONGODB_URI) {
-  mongoose.connect("mongodb://heroku_r0d2fq1c:ruel3vp7gqoqh2g3spvd14k7mr@ds229648.mlab.com:29648/heroku_r0d2fq1c");
-} else {
-	mongoose.connect("mongodb://localhost/mongonews");
-}
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
 
 // Routes
 
